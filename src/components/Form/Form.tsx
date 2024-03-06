@@ -1,10 +1,13 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import Section from "../Section/Section";
+import { useDispatch } from "react-redux";
+import { nanoid } from "nanoid";
+import { addTodo } from "../../store/todoSlice";
 
 const Form = () => {
   const [query, setQuery] = useState("");
-
+  const dispatch = useDispatch();
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
   };
@@ -12,12 +15,12 @@ const Form = () => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    // const todo = {
-    //   id: nanoid(),
-    //   text: query,
-    // };
+    const todo = {
+      id: nanoid(),
+      text: query,
+    };
 
-    // dispatch(addTodo(todo));
+    dispatch(addTodo(todo));
 
     setQuery("");
   };
