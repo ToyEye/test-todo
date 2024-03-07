@@ -1,8 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+type TTodo = {
+  text: string;
+  id: string;
+  checked: boolean;
+};
+
+type TTodoList = {
+  items: TTodo[];
+};
+
+const initialState: TTodoList = {
   items: [],
-  currentTodo: null,
 };
 
 export const todoSlice = createSlice({
@@ -17,14 +26,10 @@ export const todoSlice = createSlice({
       state.items = state.items.filter(({ id }) => id !== payload);
     },
 
-    addCurrentTodo: (state, { payload }) => {
-      state.currentTodo = payload;
-    },
-
-    updateTodo: (state, { payload }) => {
+    toggleCheckTodo: (state, { payload }) => {
       state.items = state.items.map((item) => {
-        return item.id === state.currentTodo.id
-          ? { text: payload, id: state.currentTodo.id }
+        return item.id === payload.id
+          ? { ...item, checked: payload.checked }
           : item;
       });
     },
@@ -34,8 +39,7 @@ export const todoSlice = createSlice({
   },
 });
 
-export const { addTodo, deleteTodo, updateTodo, addCurrentTodo } =
-  todoSlice.actions;
+export const { addTodo, deleteTodo, toggleCheckTodo } = todoSlice.actions;
 
 export const { getTodos } = todoSlice.selectors;
 

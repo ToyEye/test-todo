@@ -4,20 +4,31 @@ import Section from "../Section/Section";
 import { useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
 import { addTodo } from "../../store/todoSlice";
+import toast from "react-hot-toast";
+import Text from "../Text/Text";
 
 const Form = () => {
   const [query, setQuery] = useState("");
+
+  const characterLimit = 200;
+
   const dispatch = useDispatch();
+
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
   };
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
+    if (query.length > characterLimit) {
+      toast.error("Character limit reached");
+      return;
+    }
 
     const todo = {
       id: nanoid(),
       text: query,
+      checked: false,
     };
 
     dispatch(addTodo(todo));
@@ -45,6 +56,9 @@ const Form = () => {
           autoFocus
         />
       </form>
+      <Text>
+        {query.length}/{characterLimit}
+      </Text>
     </Section>
   );
 };
