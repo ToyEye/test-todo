@@ -34,7 +34,7 @@ const Todo = ({
           className="font-medium mb-1"
         />
         <div onClick={handleCheckTodo}>
-          <Text type={checked ? "primary" : "secondary"}>{text}</Text>
+          <Text type={!checked ? "primary" : "secondary"}>{text}</Text>
         </div>
         <button
           className="absolute top-[10px] right-[10px]  transition-transform transform duration-300 hover:scale-105 focus:scale-105 disabled:opacity-50 disabled:text-gray-500 disabled:pointer-events-none text-red-500"
