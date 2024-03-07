@@ -13,12 +13,12 @@ export const selectFilteredTodos = createSelector(
   [selectTodos, selectFilter],
   (todos, filter) => {
     return todos.filter((item) => {
-      if (filter === "showAll") {
-        return item;
+      if (filter === "showUnChecked") {
+        return item.checked === false;
       } else if (filter === "showChecked") {
         return item.checked === true;
       } else {
-        return item.checked === false;
+        return item;
       }
     });
   }

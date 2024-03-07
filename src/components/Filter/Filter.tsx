@@ -10,7 +10,7 @@ export const Filter = () => {
 
   return (
     <Section>
-      <ul className="flex justify-center gap-10">
+      <ul className="flex justify-center flex-col items-center gap-10 md:flex-row ">
         {typeButtons.map(({ name, text }) => (
           <li key={name}>
             <Button name={name} text={text} />

@@ -1,16 +1,19 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { FiSearch } from "react-icons/fi";
-import Section from "../Section/Section";
 import { useDispatch } from "react-redux";
-import { nanoid } from "nanoid";
-import { addTodo } from "../../store/todoSlice";
 import toast from "react-hot-toast";
+import { FiSearch } from "react-icons/fi";
+import { nanoid } from "nanoid";
+import clsx from "clsx";
+
+import Section from "../Section/Section";
 import Text from "../Text/Text";
+import { addTodo } from "../../store/todoSlice";
 
 const Form = () => {
   const [query, setQuery] = useState("");
 
   const characterLimit = 200;
+  const limitStyle = clsx(query.length > characterLimit && "text-red-500");
 
   const dispatch = useDispatch();
 
@@ -41,7 +44,7 @@ const Form = () => {
     <Section>
       <form className="max-w-md mx-auto relative mb-10" onSubmit={handleSubmit}>
         <button
-          className="w-12 h-12 text-xl font-bold text-dark absolute top-0 right-0"
+          className="w-12 h-12 text-xl font-bold text-dark absolute top-0 right-0 "
           type="submit"
         >
           <FiSearch size="16px" />
@@ -55,11 +58,16 @@ const Form = () => {
           required
           value={query}
           autoFocus
+          autoComplete="off"
         />
       </form>
-      <Text>
-        {query.length}/{characterLimit}
-      </Text>
+      {query.length > 0 && (
+        <Text type="limit">
+          <span className={limitStyle}>
+            {query.length}/{characterLimit}
+          </span>
+        </Text>
+      )}
     </Section>
   );
 };

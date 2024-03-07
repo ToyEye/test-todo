@@ -8,8 +8,18 @@ const TodoCounter = () => {
 
   return (
     <Section>
-      <p>Completed Tasks: {completedTaskCounter}</p>
-      <p>Uncompleted Tasks: {unCompletedTaskCounter}</p>
+      <p>
+        Completed Tasks:{" "}
+        <span className="text-green-600 font-semibold ">
+          {completedTaskCounter}
+        </span>
+      </p>
+      <p>
+        Uncompleted Tasks:{" "}
+        <span className="text-red-700 font-semibold">
+          {unCompletedTaskCounter}
+        </span>
+      </p>
     </Section>
   );
 };
