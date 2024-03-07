@@ -1,14 +1,25 @@
 import { createSelector } from "@reduxjs/toolkit";
+import { TTodoList } from "../types/types";
 
-export const selectTodos = (state) => state.todos.items;
-export const selectCurrentTodo = (state) => state.todos.currentTodo;
-export const selectFilter = (state) => state.filter;
+type TState = {
+  todos: TTodoList;
+};
+
+export const selectTodos = (state: TState) => state.todos.items;
+
+export const selectFilter = (state: { filter: string }) => state.filter;
 
 export const selectFilteredTodos = createSelector(
   [selectTodos, selectFilter],
   (todos, filter) => {
-    return todos.filter(({ text }) =>
-      text.toLowerCase().includes(filter.toLowerCase())
-    );
+    return todos.filter((item) => {
+      if (filter === "showAll") {
+        return item;
+      } else if (filter === "showChecked") {
+        return item.checked === true;
+      } else {
+        return item.checked === false;
+      }
+    });
   }
 );

@@ -20,6 +20,7 @@ const Form = () => {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
+
     if (query.length > characterLimit) {
       toast.error("Character limit reached");
       return;

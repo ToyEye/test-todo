@@ -1,14 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-type TTodo = {
-  text: string;
-  id: string;
-  checked: boolean;
-};
-
-type TTodoList = {
-  items: TTodo[];
-};
+import { TTodoList } from "../types/types";
 
 const initialState: TTodoList = {
   items: [],
@@ -28,9 +19,7 @@ export const todoSlice = createSlice({
 
     toggleCheckTodo: (state, { payload }) => {
       state.items = state.items.map((item) => {
-        return item.id === payload.id
-          ? { ...item, checked: payload.checked }
-          : item;
+        return item.id === payload ? { ...item, checked: !item.checked } : item;
       });
     },
   },
