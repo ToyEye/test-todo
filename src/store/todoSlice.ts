@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TTodoList } from "../types/types";
+import { createSelector } from "@reduxjs/toolkit";
+
+import { TTodoList, TTodo } from "../types/types";
 
 const initialState: TTodoList = {
   items: [],
@@ -25,11 +27,24 @@ export const todoSlice = createSlice({
   },
   selectors: {
     getTodos: (state) => state.items,
+    getCounter: createSelector(
+      (state) => state.items,
+      (items) => {
+        const completedTaskCounter = items.filter(
+          (item: TTodo) => item.checked === true
+        ).length;
+        const unCompletedTaskCounter = items.filter(
+          (item: TTodo) => item.checked === false
+        ).length;
+
+        return { unCompletedTaskCounter, completedTaskCounter };
+      }
+    ),
   },
 });
 
 export const { addTodo, deleteTodo, toggleCheckTodo } = todoSlice.actions;
 
-export const { getTodos } = todoSlice.selectors;
+export const { getTodos, getCounter } = todoSlice.selectors;
 
 export default todoSlice.reducer;
